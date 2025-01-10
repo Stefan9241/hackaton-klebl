@@ -1,2 +1,4 @@
 openai
 pymupdf
+dacite
+python-dotenv

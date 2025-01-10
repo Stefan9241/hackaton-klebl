@@ -1,0 +1,37 @@
+{
+    "metadata": {
+        "plan_key": string,
+        "stat_pos": string,
+        "auftr_number": string,
+        "index": string,
+        "prefabbed_position": string,
+        "dimensions": {
+            "length": string,
+            "width": string,
+            "height": string
+        },
+        "volume": number,
+        "weight": number
+    },
+    "parts": [
+        {
+            "position": string,
+            "amount": number,
+            "designation": string
+        }
+    ],
+    "steel_list": [
+        {
+            "steel_type": string,
+            "total_weight": number,
+            "positions_list": [
+                {
+                    "position": number,
+                    "anz": number,
+                    "length": number,
+                    "bem": string
+                }
+            ]
+        }
+    ]
+}
