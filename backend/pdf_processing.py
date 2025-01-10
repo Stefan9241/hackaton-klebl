@@ -13,8 +13,8 @@ def extract_drawing_tables(page: Page) -> Iterable[Table]:
     return page.find_tables(
         vertical_strategy="lines_strict",
         horizontal_strategy="lines",
-        intersection_tolerance = 7,
-        snap_tolerance = 0.1
+        intersection_tolerance=7,
+        snap_tolerance=0.1,
     )
 
 
@@ -36,16 +36,14 @@ def table_aspect_ratio(table: Table) -> float:
 
 def filter_tables_by_area(tables: Iterable[Table]) -> Iterable[Table]:
     MIN_AREA = 100 * 100
-    return (table
-        for table in tables
-        if table_area(table) > MIN_AREA
-    )
+    return (table for table in tables if table_area(table) > MIN_AREA)
 
 
 def filter_tables_by_aspect_ratio(tables: Iterable[Table]) -> Iterable[Table]:
     MIN_ASPECT_RATIO = 1 / 15
     MAX_ASPECT_RATIO = 1 / MIN_ASPECT_RATIO
-    return (table
+    return (
+        table
         for table in tables
         if MIN_ASPECT_RATIO < table_aspect_ratio(table) < MAX_ASPECT_RATIO
     )
