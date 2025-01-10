@@ -1,5 +1,5 @@
 from pymupdf.table import Table
-from pymupdf import Page, Document
+from pymupdf import Page, Document, Pixmap
 import base64
 from typing import Iterable
 
@@ -51,3 +51,12 @@ def filter_tables_by_aspect_ratio(tables: Iterable[Table]) -> Iterable[Table]:
 
 def filter_tables(tables: Iterable[Table]) -> Iterable[Table]:
     return filter_tables_by_aspect_ratio(filter_tables_by_area(tables))
+
+
+def get_table_pixmap(page: Page, table: Table) -> Pixmap:
+    return page.get_pixmap(clip=table.bbox)
+
+
+def pixmap_to_base64_png(pixmap: Pixmap) -> str:
+    pixmap_png_data: bytes = pixmap.tobytes()
+    return base64.b64encode(pixmap_png_data).decode("utf-8")
