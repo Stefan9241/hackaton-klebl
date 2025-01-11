@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Document, Page } from "react-pdf";
-import { Button, Snackbar, Typography } from "@mui/material";
+import { Button, Snackbar, Typography, CircularProgress } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import { Box } from "@mui/system";
 import { pdfjs } from "react-pdf";
@@ -19,11 +19,13 @@ const ImportPdfPage: React.FC = () => {
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
     const [jsonData, setJsonData] = useState<string>("");
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handleFileChange = async (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
         const file = event.target.files?.[0];
+        setIsLoading(true);
         if (file) {
             setPdfFile(file);
 
@@ -47,6 +49,8 @@ const ImportPdfPage: React.FC = () => {
                 setJsonData(
                     JSON.stringify({ error: "Failed to fetch data" }, null, 2)
                 );
+            } finally {
+                setIsLoading(false);
             }
         }
     };
@@ -114,18 +118,22 @@ const ImportPdfPage: React.FC = () => {
                         )}
                     </Box>
                     <Box sx={{ marginTop: 3, height: "calc(100% - 60px)" }}>
-                        <Editor
-                            height="100%"
-                            defaultLanguage="json"
-                            value={jsonData}
-                            onChange={handleEditorChange}
-                            options={{
-                                readOnly: false,
-                                minimap: { enabled: false },
-                                scrollBeyondLastLine: false,
-                                theme: "vs-white",
-                            }}
-                        />
+                        {isLoading ? (
+                            <CircularProgress />
+                        ) : (
+                            <Editor
+                                height="100%"
+                                defaultLanguage="json"
+                                value={jsonData}
+                                onChange={handleEditorChange}
+                                options={{
+                                    readOnly: false,
+                                    minimap: { enabled: false },
+                                    scrollBeyondLastLine: false,
+                                    theme: "vs-white",
+                                }}
+                            />
+                        )}
                     </Box>
                 </Box>
 
