@@ -21,7 +21,7 @@ const NAVIGATION: Navigation = [
 ];
 
 const BRANDING = {
-  title: 'Hackathon Project',
+  title: 'Klebl Data Extractor',
 };
 
 export default function App() {
