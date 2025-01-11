@@ -6,7 +6,9 @@ from pdf_processing import (
     pixmap_to_base64_png,
     save_pixmap,
 )
-from ai_processing import parse_tables, connect_to_ai
+
+# from ai_processing import parse_tables, connect_to_ai
+from gemini_processing import parse_tables, connect_to_ai
 
 if __name__ == "__main__":
     import base64
@@ -40,7 +42,7 @@ if __name__ == "__main__":
     #     save_pixmap(pixmap, f"table-{i}.png")
     base64_images = (pixmap_to_base64_png(pixmap) for pixmap in pixmaps)
 
-    ai_client = connect_to_ai(os.getenv("OPEN_AI_KEY"))
+    ai_client = connect_to_ai(os.getenv("GEMINI_API_KEY"))
     ai_response = parse_tables(base64_images, ai_client)
-    print("OPENAI RESPONSE")
+    print("GEMINI RESPONSE")
     pprint(ai_response)
