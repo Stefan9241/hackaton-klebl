@@ -1,0 +1,11 @@
+/* In your CSS file or a style block */
+.resizer {
+  background: grey; /* Grey color for the resizer */
+  width: 5px; /* Thickness of the resizer */
+  cursor: col-resize; /* Cursor for resizing */
+  z-index: 1; /* Ensure it is above the panes */
+}
+
+.resizer:hover {
+  background: darkgrey; /* Slightly darker grey on hover */
+}
