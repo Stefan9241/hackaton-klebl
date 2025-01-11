@@ -60,3 +60,7 @@ def get_table_pixmap(page: Page, table: Table) -> Pixmap:
 def pixmap_to_base64_png(pixmap: Pixmap) -> str:
     pixmap_png_data: bytes = pixmap.tobytes()
     return base64.b64encode(pixmap_png_data).decode("utf-8")
+
+
+def save_pixmap(pixmap: Pixmap, filename: str) -> None:
+    pixmap.save(filename)

@@ -4,6 +4,7 @@ from pdf_processing import (
     filter_tables,
     get_table_pixmap,
     pixmap_to_base64_png,
+    save_pixmap,
 )
 from ai_processing import parse_tables, connect_to_ai
 
@@ -35,6 +36,8 @@ if __name__ == "__main__":
     tables = filter_tables(extract_drawing_tables(page))
     logging.info("Extracted tables")
     pixmaps = (get_table_pixmap(page, table) for table in tables)
+    # for i, pixmap in enumerate(pixmaps):
+    #     save_pixmap(pixmap, f"table-{i}.png")
     base64_images = (pixmap_to_base64_png(pixmap) for pixmap in pixmaps)
 
     ai_client = connect_to_ai(os.getenv("OPEN_AI_KEY"))

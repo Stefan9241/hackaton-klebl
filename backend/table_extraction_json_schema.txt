@@ -3,7 +3,6 @@
         "plan_key": string,
         "stat_pos": string,
         "auftr_number": string,
-        "index": string,
         "prefabbed_position": string,
         "dimensions": {
             "length": string,
