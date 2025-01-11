@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { Document, Page } from "react-pdf";
-import { Button, Snackbar, Typography, CircularProgress } from "@mui/material";
+import {
+    Button,
+    Snackbar,
+    Typography,
+    CircularProgress,
+    Tabs,
+    Tab,
+} from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import { Box } from "@mui/system";
 import { pdfjs } from "react-pdf";
@@ -20,6 +27,8 @@ const ImportPdfPage: React.FC = () => {
     const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
     const [jsonData, setJsonData] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [loadedImages, setLoadedImages] = useState<string[]>([]);
+    const [activeTab, setActiveTab] = useState<number>(0);
 
     const handleFileChange = async (
         event: React.ChangeEvent<HTMLInputElement>
@@ -43,7 +52,10 @@ const ImportPdfPage: React.FC = () => {
                         },
                     }
                 );
-                setJsonData(JSON.stringify(response.data, null, 2));
+                setJsonData(
+                    JSON.stringify(response.data.extracted_data, null, 2)
+                );
+                setLoadedImages(response.data.table_images);
             } catch (error) {
                 console.error("Error fetching data", error);
                 setJsonData(
@@ -146,46 +158,92 @@ const ImportPdfPage: React.FC = () => {
                         flexDirection: "column",
                     }}
                 >
-                    {pdfFile ? (
-                        <>
-                            <Typography variant="h6" sx={{ marginBottom: 2 }}>
-                                PDF Preview
-                            </Typography>
-                            <Box
-                                sx={{
-                                    flex: 1,
-                                    overflowY: "auto",
-                                    overflowX: "auto",
-                                    "&::-webkit-scrollbar": {
-                                        width: "8px",
-                                    },
-                                    "&::-webkit-scrollbar-thumb": {
-                                        backgroundColor: "#888",
-                                        borderRadius: "4px",
-                                    },
-                                }}
-                            >
-                                <Document
-                                    file={pdfFile}
-                                    loading={
-                                        <Typography>Loading PDF...</Typography>
-                                    }
+                    <Tabs
+                        value={activeTab}
+                        onChange={(_, newValue) => setActiveTab(newValue)}
+                    >
+                        <Tab label="Extracted tables" />
+                        <Tab label="PDF Preview" />
+                    </Tabs>
+                    {activeTab === 0 && (
+                        <Box
+                            sx={{
+                                overflowY: "auto",
+                                overflowX: "auto",
+                                "&::-webkit-scrollbar": {
+                                    width: "8px",
+                                },
+                                "&::-webkit-scrollbar-thumb": {
+                                    backgroundColor: "#888",
+                                    borderRadius: "4px",
+                                },
+                            }}
+                        >
+                            {loadedImages.length > 0 ? (
+                                loadedImages.map((imageSrc, i) => (
+                                    <img
+                                        src={imageSrc}
+                                        key={i}
+                                        style={{
+                                            width: "auto",
+                                            display: "block",
+                                            borderRadius: "8px",
+                                        }}
+                                    />
+                                ))
+                            ) : (
+                                <Typography>
+                                    Tables not extracted yet
+                                </Typography>
+                            )}
+                        </Box>
+                    )}
+                    {activeTab === 1 &&
+                        (pdfFile ? (
+                            <>
+                                <Typography
+                                    variant="h6"
+                                    sx={{ marginBottom: 2 }}
                                 >
-                                    <Page
-                                        pageNumber={pageNumber}
-                                        renderTextLayer={false}
+                                    PDF Preview
+                                </Typography>
+                                <Box
+                                    sx={{
+                                        flex: 1,
+                                        overflowY: "auto",
+                                        overflowX: "auto",
+                                        "&::-webkit-scrollbar": {
+                                            width: "8px",
+                                        },
+                                        "&::-webkit-scrollbar-thumb": {
+                                            backgroundColor: "#888",
+                                            borderRadius: "4px",
+                                        },
+                                    }}
+                                >
+                                    <Document
+                                        file={pdfFile}
                                         loading={
                                             <Typography>
-                                                Loading page...
+                                                Loading PDF...
                                             </Typography>
                                         }
-                                    />
-                                </Document>
-                            </Box>
-                        </>
-                    ) : (
-                        <Typography>No PDF selected</Typography>
-                    )}
+                                    >
+                                        <Page
+                                            pageNumber={pageNumber}
+                                            renderTextLayer={false}
+                                            loading={
+                                                <Typography>
+                                                    Loading page...
+                                                </Typography>
+                                            }
+                                        />
+                                    </Document>
+                                </Box>
+                            </>
+                        ) : (
+                            <Typography>No PDF selected</Typography>
+                        ))}
                 </Box>
             </Allotment>
 
