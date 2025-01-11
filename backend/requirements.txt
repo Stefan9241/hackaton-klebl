@@ -1,0 +1,6 @@
+openai
+pymupdf
+dacite
+python-dotenv
+google-generativeai
+flask
