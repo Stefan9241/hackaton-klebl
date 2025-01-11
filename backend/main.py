@@ -9,6 +9,8 @@ from pdf_processing import (
 
 # from ai_processing import parse_tables, connect_to_ai
 from gemini_processing import parse_tables, connect_to_ai
+import os
+import logging
 
 
 def extract_pdf_data(pdf_base64: str) -> dict:
@@ -27,9 +29,7 @@ def extract_pdf_data(pdf_base64: str) -> dict:
 
 if __name__ == "__main__":
     import base64
-    import os
     from dotenv import load_dotenv
-    import logging
     from pprint import pprint
 
     logging.basicConfig(
@@ -37,8 +37,6 @@ if __name__ == "__main__":
         format="%(asctime)s [%(levelname)s] %(message)s",
         handlers=[logging.StreamHandler()],
     )
-
-    load_dotenv()
 
     b64_data = None
     with open(
