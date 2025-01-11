@@ -27,10 +27,141 @@ const ImportPdfPage: React.FC = () => {
       setPdfFile(file);
 
       try {
-        const response = await axios.get(
-          "https://jsonplaceholder.typicode.com/posts/1"
-        );
-        setJsonData(JSON.stringify(response.data, null, 2));
+        // const response = await axios.get(
+        //   "https://jsonplaceholder.typicode.com/posts/1"
+        // );
+        // setJsonData(JSON.stringify(response.data, null, 2));
+        setJsonData(JSON.stringify({
+          metadata: {
+            plan_key: "FT_XX_06-103_b_F",
+            stat_pos: "06-103",
+            auftr_number: "819-19",
+            prefabbed_position: "TT-Deckenplatte Pos. 06-103",
+            dimensions: {
+              length: "13.92",
+              width: "2.423",
+              height: null,
+            },
+            volume: null,
+            weight: 498.464,
+          },
+          parts: [
+            {
+              position: "1",
+              amount: 10,
+              designation: "R257A",
+            },
+            {
+              position: "1",
+              amount: 1,
+              designation: "Q335A",
+            },
+          ],
+          steel_list: [
+            {
+              steel_type: "Bewehrung",
+              total_weight: 318.79,
+              positions_list: [
+                {
+                  position: 1,
+                  anz: 56,
+                  length: 2.14,
+                  bem: null,
+                },
+                {
+                  position: 2,
+                  anz: 118,
+                  length: 13.87,
+                  bem: null,
+                },
+                {
+                  position: 3,
+                  anz: 12,
+                  length: 13.81,
+                  bem: null,
+                },
+                {
+                  position: 4,
+                  anz: 134,
+                  length: 13.81,
+                  bem: null,
+                },
+                {
+                  position: 5,
+                  anz: 32,
+                  length: 2.16,
+                  bem: null,
+                },
+                {
+                  position: 6,
+                  anz: 16,
+                  length: 1.72,
+                  bem: null,
+                },
+                {
+                  position: 7,
+                  anz: 12,
+                  length: 1.74,
+                  bem: null,
+                },
+                {
+                  position: 8,
+                  anz: 8,
+                  length: 1.78,
+                  bem: null,
+                },
+                {
+                  position: 9,
+                  anz: 10,
+                  length: 2.53,
+                  bem: null,
+                },
+                {
+                  position: 10,
+                  anz: 4,
+                  length: 1.35,
+                  bem: null,
+                },
+                {
+                  position: 11,
+                  anz: 88,
+                  length: 1.68,
+                  bem: null,
+                },
+                {
+                  position: 12,
+                  anz: 164,
+                  length: 1.44,
+                  bem: null,
+                },
+                {
+                  position: 13,
+                  anz: 142,
+                  length: 1.5,
+                  bem: null,
+                },
+                {
+                  position: 14,
+                  anz: 1510,
+                  length: 1.74,
+                  bem: null,
+                },
+              ],
+            },
+            {
+              steel_type: "SpSt 1660/1860",
+              total_weight: 182.12,
+              positions_list: [
+                {
+                  position: 100,
+                  anz: 18,
+                  length: 13.86,
+                  bem: null,
+                },
+              ],
+            },
+          ],
+        },null, 2));
       } catch (error) {
         console.error("Error fetching data", error);
         setJsonData(JSON.stringify({ error: "Failed to fetch data" }, null, 2));
